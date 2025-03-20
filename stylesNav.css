@@ -1,0 +1,47 @@
+/* Menu de navigation */
+nav {
+    color: #e48307; /* Couleur dorée */
+    padding: 10px 0;
+}
+
+nav ul {
+    color: #e48307;
+    list-style: none;
+    display: flex;
+    justify-content: center; /* Centrer les liens horizontalement */
+    gap: 20px;
+}
+
+nav ul li {
+    display: inline-block;
+}
+
+nav ul li a {
+    color: #ffffff; /* Texte en blanc */
+    text-decoration: none;
+    font-size: 1.2rem;
+    transition: color 0.3s ease;
+}
+
+nav ul li a:hover {
+    color: #e48307; /* Changer la couleur en doré clair au survol */
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    /* Rendre le menu plus simple en version mobile */
+    nav {
+        position: relative;
+        top: 0;
+        right: 0;
+        text-align: center;
+    }
+
+    nav ul {
+        gap: 10px;
+    }
+
+    nav ul li a {
+        font-size: 0.9rem; /* Agrandir la taille des liens sur mobile */
+    }
+}

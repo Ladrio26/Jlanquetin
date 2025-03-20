@@ -1,0 +1,46 @@
+/* Menu déroulant (Accordion) */
+button.accordion {
+    background-color: transparent;
+    color: #00bfff;
+    padding: 10px;
+    width: 100%;
+    border: none;
+    text-align: left;
+    font-size: 1.2rem;
+    cursor: pointer;
+    border-radius: 10px;
+    margin: 5px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* Survol Souris Menu déroulant (Accordion) */
+button.accordion:hover {
+    background-color: #003366;
+}
+
+/* Paragraphe dans les menus déroulants */
+.panel {
+    padding: 0 15px;
+    display: none;
+    background-color: #333;
+    color: #ccc;
+    border-radius: 10px;
+    margin-bottom: 10px;
+}
+
+/* Flèche pour le bouton */
+button.accordion:after {
+    content: "▼"; /* Flèche pointant vers le bas */
+    font-size: 1.5rem;
+    transition: transform 0.3s ease;
+}
+
+button.accordion.open:after {
+    transform: rotate(180deg); /* Rotation de la flèche quand le menu est ouvert */
+}
+
+button.accordion:focus {
+    outline: none;
+}

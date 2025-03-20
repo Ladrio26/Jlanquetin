@@ -1,0 +1,117 @@
+/* Global Styles */
+* {
+    margin: 0; /* Marge autour */
+    padding: 0; /* Espace intérieur entre les bords et les éléments */
+    box-sizing: border-box; /* inclure les bords dans la taille d'un élement */
+    font-family: 'Arial', sans-serif; /* Police d'écriture */
+}
+
+/* Toute la page */
+body {
+    background-color: #000000; /* Fond noir */
+    color: #ffffff; /* Texte en blanc */
+    line-height: 1.6; /* Espacement entre les lignes */
+    font-size: 16px; /* Taille de la police */
+    display: flex; /* Les sous élements seront flexibles */
+    flex-direction: column;   /* Aligne le contenu en colonne (verticalement) */
+    min-height: 100%;         /* Assure que le body occupe toujours au moins 100% de la hauteur de l'écran */
+    flex: 1; /* Prendra toute la place restante */
+}
+
+/* Container */
+.container {
+    width: 80%; /* Largeur égale à 80% de celle de son parent (ici Body) */
+    margin: 0 auto; /* Marge verticale 0 et marge horizontale automatique (pour centrer) */
+    display: flex; /* Les sous élements seront flexibles */
+    justify-content: space-between; /* Les sous élements seront répartis de façon égale */
+    min-height: 70vh;
+}
+
+.content {
+    display: flex; /* Les sous élements seront flexibles */
+    justify-content: space-between; /* Les sous élements seront répartis de façon égale */
+    flex-grow: 1;
+}
+
+/* Header */
+header {
+    background: linear-gradient(to bottom, #262626, #000000); /* Dégradé du gris foncé au noir */
+    color: #00bfff; /* Bleu clair pour le texte */
+    padding: 20px 0; /* Espace intérieur entre les bords et les éléments */
+    text-align: center; /* Centre le texte */
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Titre Header */
+header h1 {
+    font-size: 3rem;
+    font-weight: bold;
+}
+
+/* Paragraphe Header */
+header p {
+    font-size: 1.2rem;
+    margin-top: 10px;
+    font-weight: lighter;
+}
+
+/* Footer */
+footer {
+    background-color: #000000; /* Fond noir */
+    color: #ffffff;
+    padding: 15px 0;
+    text-align: center;
+    margin: 0;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+footer a:hover {
+    color: #0099cc; /* Bleu foncé au survol */
+}
+
+/* Eviter le soulignement des liens */
+a {
+    text-decoration: none !important; /* !important garantit que cette règle l'emporte sur toute autre règle */
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    header h1 {
+        font-size: 2.5rem;
+    }
+
+    /* Le sous titre prend 98% de la largeur */
+    header p {
+        font-size: 1.2rem;
+        width: 98%
+    }
+
+    .container {
+        width: 90%;
+        display: grid;  /* Utilisation de Flexbox pour empiler verticalement */
+        flex-direction: column; /* Empilement vertical */
+        gap: 20px; /* Espace entre les sections */
+    }
+
+    section#services h2, section#contact h2 {
+        font-size: 1.8rem;
+    }
+
+    button {
+        padding: 12px 25px;
+        font-size: 1.1rem;
+    }
+
+    /* Les sections prennent la largeur complète */
+    .service, .contact-form {
+        width: 100%;
+    }
+
+    /* Le sous titre prend 98% de la largeur */
+    footer p {
+        font-size: 1rem;
+        width: 98%
+    }
+}
