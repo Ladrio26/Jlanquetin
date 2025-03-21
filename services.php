@@ -50,7 +50,8 @@
         </div>
 
         <div id="contact" class="contact-form">
-            <h2>Image ?</h2>
+            <h2>Image moche de test</h2>
+            <img src="images/ordiportable.jpg" alt="Web" width="600" height="400">
         </div>
 
     </div>
