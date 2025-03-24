@@ -1,0 +1,4 @@
+.ordiportable {
+    width: 100%; /* L'image occupera toute la largeur de son conteneur */
+    height: auto; /* La hauteur sera ajustée pour garder le ratio */
+}

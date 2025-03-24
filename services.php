@@ -8,6 +8,8 @@
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="styles2.css">
     <link rel="stylesheet" href="stylesNav.css">
+    <link rel="stylesheet" href="stylesDeroulant.css">
+    <link rel="stylesheet" href="stylesImages.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> <!-- jQuery pour simplifier le script -->
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=AW-16938109963"></script>
@@ -51,7 +53,7 @@
 
         <div id="contact" class="contact-form">
             <h2>Image moche de test</h2>
-            <img src="images/ordiportable.jpg" alt="Web" width="600" height="400">
+            <img src="images/ordiportable.jpg" alt="Web" class="ordiportable">
         </div>
 
     </div>
