@@ -31,8 +31,22 @@
             <ul>
                 <li><a href="index.php">Accueil</a></li>
                 <li><a href="qui-suis-je.php">Qui suis-je ?</a></li>
-                <li><a href="services.php">Mes services</a></li>
-                <li><a href="tarifs.php">Tarifs</a></li>
+                <li class="dropdown">
+                    <a>Mes services</a>
+                    <ul class="submenu">
+                        <li><a href="services.php">Administratif</a></li>
+                        <li><a href="internet.php">Internet</a></li>
+                        <li><a href="redactions-corrections.php">Rédactions & Corrections</a></li>
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a href="tarifs.php">Tarifs</a>
+                    <ul class="submenu">
+                        <li><a href="administratif.php">Administratif</a></li>
+                        <li><a href="internet.php">Internet</a></li>
+                        <li><a href="redactions-corrections.php">Rédactions & Corrections</a></li>
+                    </ul>
+                </li>
                 <li><a href="cgv.php">CGV</a></li>
                 <li><a href="mentions-legales.php">Mentions légales</a></li>
             </ul>
@@ -47,9 +61,7 @@
             <h2>Grille Tarifaire</h2>
         </div>
 
-        <div id="contact" class="contact-form">
-            <h2>Image ?</h2>
-        </div>
+        <img src="images/AideAdministrative.png" alt="Web" class="AideAdministrative">
 
     </div>
 </section>

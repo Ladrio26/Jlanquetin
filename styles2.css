@@ -6,9 +6,21 @@
     width: 48%;
 }
 
+p {
+    text-indent: 20px; /* Crée un retrait d'alinéa de 20px */
+    margin-bottom: 20px; /* Espace de 20px entre chaque paragraphe */
+}
+
 /* Titre Sections */
 h2 {
     color: #00bfff;
+    font-size: 2rem;
+    margin-bottom: 20px;
+}
+
+/* Titre Sous parties */
+h3 {
+    color: #ffa500;
     font-size: 2rem;
     margin-bottom: 20px;
 }

@@ -31,8 +31,22 @@
             <ul>
                 <li><a href="index.php">Accueil</a></li>
                 <li><a href="qui-suis-je.php">Qui suis-je ?</a></li>
-                <li><a href="services.php">Mes services</a></li>
-                <li><a href="tarifs.php">Tarifs</a></li>
+                <li class="dropdown">
+                    <a>Mes services</a>
+                    <ul class="submenu">
+                        <li><a href="services.php">Administratif</a></li>
+                        <li><a href="internet.php">Internet</a></li>
+                        <li><a href="redactions-corrections.php">Rédactions & Corrections</a></li>
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a href="tarifs.php">Tarifs</a>
+                    <ul class="submenu">
+                        <li><a href="administratif.php">Administratif</a></li>
+                        <li><a href="internet.php">Internet</a></li>
+                        <li><a href="redactions-corrections.php">Rédactions & Corrections</a></li>
+                    </ul>
+                </li>
                 <li><a href="cgv.php">CGV</a></li>
                 <li><a href="mentions-legales.php">Mentions légales</a></li>
             </ul>
@@ -44,12 +58,14 @@
     <div class="container">
 
         <div id="services" class="service">
-            <h2>Coucou c'est moi</h2>
+            <h2>Qui suis-je ?</h2>
+            <p>Je m'appelle Jolan Lanquetin, et fort de près de 10 ans d'expérience dans les finances publiques, j'ai acquis une expertise solide dans la gestion des impôts, tant pour les particuliers que pour les entreprises.</p>
+            <p>Titulaire d'un bac scientifique avec une spécialité en mathématiques et sciences de l'ingénieur, ainsi qu'une formation en classe préparatoire math sup, j'ai toujours été passionné par les mathématiques et les nouvelles technologies.</p>
+            <p>Cette passion m'a conduit à me réorienter vers le développement web, un domaine dans lequel j'ai acquis des compétences techniques solides.</p>
+            <p>Mon parcours professionnel me permet aujourd'hui de combiner une expérience approfondie dans l'administratif avec une expertise en développement, afin d’offrir des services adaptés aux besoins de mes clients, avec rigueur et innovation.</p>
         </div>
 
-        <div id="contact" class="contact-form">
-            <h2>Image ?</h2>
-        </div>
+        <img src="images/PCportable.jpg" alt="Web" class="PCportable">
 
     </div>
 </section>

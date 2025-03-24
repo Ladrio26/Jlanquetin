@@ -2,3 +2,23 @@
     width: 100%; /* L'image occupera toute la largeur de son conteneur */
     height: auto; /* La hauteur sera ajustée pour garder le ratio */
 }
+
+.administratif {
+    width: 50%; /* L'image occupera toute la largeur de son conteneur */
+     /* La hauteur sera ajustée pour garder le ratio */
+}
+
+.PCportable {
+    width: 50%; /* L'image occupera toute la largeur de son conteneur */
+    height: auto; /* La hauteur sera ajustée pour garder le ratio */
+}
+
+.Meeting {
+    width: 40%; /* L'image occupera toute la largeur de son conteneur */
+    height: auto; /* La hauteur sera ajustée pour garder le ratio */
+}
+
+.AideAdministrative {
+    width: 50%; /* L'image occupera toute la largeur de son conteneur */
+    height: auto; /* La hauteur sera ajustée pour garder le ratio */
+}
