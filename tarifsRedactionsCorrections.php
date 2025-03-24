@@ -66,14 +66,10 @@
     <div class="container">
 
         <div id="services" class="service">
-            <h2>Qui suis-je ?</h2>
-            <p>Je m'appelle Jolan Lanquetin, et fort de près de 10 ans d'expérience dans les finances publiques, j'ai acquis une expertise solide dans la gestion des impôts, tant pour les particuliers que pour les entreprises.</p>
-            <p>Titulaire d'un bac scientifique avec une spécialité en mathématiques et sciences de l'ingénieur, ainsi qu'une formation en classe préparatoire math sup, j'ai toujours été passionné par les mathématiques et les nouvelles technologies.</p>
-            <p>Cette passion m'a conduit à me réorienter vers le développement web, un domaine dans lequel j'ai acquis des compétences techniques solides.</p>
-            <p>Mon parcours professionnel me permet aujourd'hui de combiner une expérience approfondie dans l'administratif avec une expertise en développement, afin d’offrir des services adaptés aux besoins de mes clients, avec rigueur et innovation.</p>
+            <h2>Grille Tarifaire</h2>
         </div>
 
-        <img src="images/BureauPcPortable.jpg" alt="Web" class="bureauPcPortable">
+        <img src="images/ordiportable.jpg" alt="Web" class="ordiportable">
 
     </div>
 </section>

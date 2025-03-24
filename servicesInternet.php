@@ -56,7 +56,6 @@
                         <li><a href="tarifsRedactionsCorrections.php">Rédactions & Corrections</a></li>
                     </ul>
                 </li>
-                <li><a href="cgv.php">CGV</a></li>
                 <li><a href="mentions-legales.php">Mentions légales</a></li>
             </ul>
         </nav>
@@ -67,6 +66,11 @@
     <div class="container">
 
         <div id="services" class="service">
+            <h2>Mes Services</h2>
+            <h3>Aide internet générale</h3>
+            <p>.</p>
+            <h3>Site Web</h3>
+            <p>.</p>
 
         </div>
 

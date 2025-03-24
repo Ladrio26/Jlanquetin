@@ -56,7 +56,6 @@
                         <li><a href="tarifsRedactionsCorrections.php">Rédactions & Corrections</a></li>
                     </ul>
                 </li>
-                <li><a href="cgv.php">CGV</a></li>
                 <li><a href="mentions-legales.php">Mentions légales</a></li>
             </ul>
         </nav>
@@ -67,12 +66,10 @@
     <div class="container">
 
         <div id="services" class="service">
-            <h2>Conditions générales de vente</h2>
+            <h2>Grille Tarifaire</h2>
         </div>
 
-        <div id="contact" class="contact-form">
-            <h2>Image ?</h2>
-        </div>
+        <img src="images/website.jpg" alt="Web" class="website">
 
     </div>
 </section>

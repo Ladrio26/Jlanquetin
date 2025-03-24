@@ -65,7 +65,6 @@
                         <li><a href="tarifsRedactionsCorrections.php">Rédactions & Corrections</a></li>
                     </ul>
                 </li>
-                <li><a href="cgv.php">CGV</a></li>
                 <li><a href="mentions-legales.php">Mentions légales</a></li>
             </ul>
         </nav>

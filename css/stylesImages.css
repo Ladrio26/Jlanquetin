@@ -1,11 +1,11 @@
 .ordiportable {
-    width: 100%; /* L'image occupera toute la largeur de son conteneur */
+    width: 50%; /* L'image occupera toute la largeur de son conteneur */
     height: auto; /* La hauteur sera ajustée pour garder le ratio */
 }
 
 .administratif {
     width: 50%; /* L'image occupera toute la largeur de son conteneur */
-     /* La hauteur sera ajustée pour garder le ratio */
+    height: auto; /* La hauteur sera ajustée pour garder le ratio */
 }
 
 .PCportable {
@@ -19,6 +19,21 @@
 }
 
 .AideAdministrative {
+    width: 50%; /* L'image occupera toute la largeur de son conteneur */
+    height: auto; /* La hauteur sera ajustée pour garder le ratio */
+}
+
+.redaction {
+    width: 50%; /* L'image occupera toute la largeur de son conteneur */
+    height: auto; /* La hauteur sera ajustée pour garder le ratio */
+}
+
+.website {
+    width: 50%; /* L'image occupera toute la largeur de son conteneur */
+    height: auto; /* La hauteur sera ajustée pour garder le ratio */
+}
+
+.bureauPcPortable {
     width: 50%; /* L'image occupera toute la largeur de son conteneur */
     height: auto; /* La hauteur sera ajustée pour garder le ratio */
 }

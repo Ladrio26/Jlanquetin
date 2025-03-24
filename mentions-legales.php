@@ -56,7 +56,6 @@
                         <li><a href="tarifsRedactionsCorrections.php">Rédactions & Corrections</a></li>
                     </ul>
                 </li>
-                <li><a href="cgv.php">CGV</a></li>
                 <li><a href="mentions-legales.php">Mentions légales</a></li>
             </ul>
         </nav>
@@ -67,11 +66,27 @@
     <div class="container">
 
         <div id="services" class="service">
-            <h2>Mentions Légales</h2>
+
+            <h2>Mentions légales -  Écrivain public</h2>
+            <h3>Entreprise</h3>
+            <p>Nom : Jolan Lanquetin</p>
+            <p>Siren : 941 723 108</p>
+            <p>Forme Juridique : Entrepreneur individuel</p>
+            <p>Siège social : 34 BOULEVARD DE LA MARNE BATIMENT A, 21000 DIJON France</p>
+            <h3>Conception du site</h3>
+            <p>Jolan Lanquetin</p>
+            <h3>Avertissement</h3>
+            <p>Ce site internet présente les services offerts par Jolan Lanquetin, écrivain public. Les informations qui y figurent sont fournies à titre informatif et peuvent être modifiées ou mises à jour. Elles ne remplacent en aucun cas les conditions spécifiées dans les devis et contrats personnalisés établis entre le prestataire et ses clients.</p>
         </div>
 
         <div id="contact" class="contact-form">
-            <h2>Image ?</h2>
+            <h3>Politique de confidentialité des données</h3>
+            <p><strong>Données personnelles</strong></p>
+            <p>Sur ce site (www.jlanquetin.goodloss.fr), nous collectons deux types de données. D'une part, les informations que vous nous fournissez directement, telles que votre prénom, nom et email via le formulaire de contact ou par email, nécessaires pour traiter votre demande. D’autre part, des données techniques sont collectées automatiquement lors de votre navigation, avec votre consentement préalable. Cela inclut des informations comme la durée de votre visite, votre adresse IP anonymisée, ainsi que le type et la version de votre navigateur. Ces données sont recueillies via des cookies afin d'analyser et d'améliorer l'expérience des utilisateurs sur notre site.</p>
+            <p><strong>Utilisation des données</strong></p>
+            <p>Les informations que vous nous fournissez directement sont utilisées uniquement pour répondre à vos demandes ou pour établir un contact avec vous. Quant aux données de type « web analytics », elles sont collectées de manière anonyme via Google Analytics, en utilisant des adresses IP anonymisées. Ces données nous aident à analyser la fréquentation de notre site, à suivre les interactions des utilisateurs et à identifier d’éventuelles erreurs, dans le but d’améliorer votre expérience en ligne. Ces données sont exclusivement traitées par Jolan Lanquetin, responsable du traitement, et ne seront en aucun cas partagées avec des tiers ni utilisées à d’autres fins que celles mentionnées ci-dessus.</p>
+            <p><strong>Base légale</strong></p>
+            <p>La collecte des données personnelles s’effectue uniquement avec votre consentement préalable, qui doit être donné de manière libre, explicite et sans ambiguïté. En accord avec l’article 34 de la loi n° 78-17 du 6 janvier 1978 sur l’informatique, les fichiers et les libertés, Jolan Lanquetin, responsable de l’édition du site, vous rappelle que vous avez le droit d’accéder, de rectifier ou de supprimer les données vous concernant. Si vous souhaitez exercer ces droits, vous pouvez contacter directement Jolan Lanquetin par email à l’adresse suivante : lanquetin.jolan@gmail.com, ou bien utiliser le formulaire de contact prévu à cet effet.</p>
         </div>
 
     </div>

@@ -56,7 +56,6 @@
                         <li><a href="tarifsRedactionsCorrections.php">Rédactions & Corrections</a></li>
                     </ul>
                 </li>
-                <li><a href="cgv.php">CGV</a></li>
                 <li><a href="mentions-legales.php">Mentions légales</a></li>
             </ul>
         </nav>
@@ -67,10 +66,17 @@
     <div class="container">
 
         <div id="services" class="service">
+            <h2>Mes Services</h2>
+            <h3>Rédaction de CV & Lettres de motivation</h3>
+            <p>.</p>
+            <h3>Correction de textes</h3>
+            <p>.</p>
+            <h3>Soutien scolaire</h3>
+            <p>.</p>
 
         </div>
 
-
+        <img src="images/redaction.jpg" alt="Web" class="redaction">
 
     </div>
 </section>
