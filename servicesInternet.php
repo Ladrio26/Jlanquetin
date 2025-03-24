@@ -67,10 +67,10 @@
     <div class="container">
 
         <div id="services" class="service">
-            <h2>Grille Tarifaire</h2>
+
         </div>
 
-        <img src="images/AideAdministrative.png" alt="Web" class="AideAdministrative">
+        <img src="images/PCportable.jpg" alt="Web" class="PCportable">
 
     </div>
 </section>

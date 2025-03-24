@@ -35,30 +35,41 @@
     <div>
         <h1>Jolan LANQUETIN</h1>
         <p>Écrivain Public - Simplification des démarches administratives et rédaction de documents</p>
+        <!-- Bouton en dehors du <nav> -->
+        <button class="hamburger" aria-label="Ouvrir le menu">
+            &#9776; <span class="hamburger-text">Menu</span>
+        </button>
+        <div class="menu-overlay"></div>
+
         <nav>
-            <ul>
+            <ul class="nav-list">
                 <li><a href="index.php">Accueil</a></li>
                 <li><a href="qui-suis-je.php">Qui suis-je ?</a></li>
                 <li class="dropdown">
-                    <a>Mes services</a>
+                    <div class="dropdown-toggle">
+                        <a>Mes services</a>
+                    </div>
                     <ul class="submenu">
                         <li><a href="servicesAdministratifs.php">Administratif</a></li>
-                        <li><a href="internet.php">Internet</a></li>
-                        <li><a href="redactions-corrections.php">Rédactions & Corrections</a></li>
+                        <li><a href="servicesInternet.php">Internet</a></li>
+                        <li><a href="servicesRedactionsCorrections.php">Rédactions & Corrections</a></li>
                     </ul>
                 </li>
                 <li class="dropdown">
-                    <a>Tarifs</a>
+                    <div class="dropdown-toggle">
+                        <a>Tarifs</a>
+                    </div>
                     <ul class="submenu">
                         <li><a href="tarifsAdministratifs.php">Administratif</a></li>
-                        <li><a href="internet.php">Internet</a></li>
-                        <li><a href="redactions-corrections.php">Rédactions & Corrections</a></li>
+                        <li><a href="tarifsInternet.php">Internet</a></li>
+                        <li><a href="tarifsRedactionsCorrections.php">Rédactions & Corrections</a></li>
                     </ul>
                 </li>
                 <li><a href="cgv.php">CGV</a></li>
                 <li><a href="mentions-legales.php">Mentions légales</a></li>
             </ul>
         </nav>
+
     </div>
 </header>
 
@@ -142,26 +153,8 @@
     </div>
 </footer>
 
-<script>
-    // Script pour rendre les encarts déroulants
-    $(document).ready(function() {
-        var accordions = $(".accordion");
-
-        accordions.on("click", function() {
-            // Fermer tous les autres panels et enlever la classe "open" des autres flèches
-            $(".panel").not($(this).next()).slideUp(); // Ferme les autres panels
-            $(".accordion").not(this).removeClass("open"); // Retire la classe "open" des autres flèches
-
-            // Si le panel cliqué est déjà ouvert, le fermer
-            $(this).next().slideToggle();
-
-            // Ajouter une classe pour la flèche
-            $(this).toggleClass("open");
-        });
-    });
-
-</script>
-
+<script src="js/deroulants.js"></script>
+<script src="js/menu.js"></script>
 
 </body>
 </html>

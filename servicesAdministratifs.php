@@ -27,24 +27,33 @@
     <div>
         <h1>Jolan LANQUETIN</h1>
         <p>Écrivain Public - Simplification des démarches administratives et rédaction de documents</p>
+        <button class="hamburger" aria-label="Ouvrir le menu">
+            &#9776; <span class="hamburger-text">Menu</span>
+        </button>
+        <div class="menu-overlay"></div>
+
         <nav>
-            <ul>
+            <ul class="nav-list">
                 <li><a href="index.php">Accueil</a></li>
-                <li><a href="Pages/qui-suis-je.php">Qui suis-je ?</a></li>
+                <li><a href="qui-suis-je.php">Qui suis-je ?</a></li>
                 <li class="dropdown">
-                    <a>Mes services</a>
+                    <div class="dropdown-toggle">
+                        <a>Mes services</a>
+                    </div>
                     <ul class="submenu">
-                        <li><a href="Pages/servicesAdministratifs.php">Administratif</a></li>
-                        <li><a href="internet.php">Internet</a></li>
-                        <li><a href="redactions-corrections.php">Rédactions & Corrections</a></li>
+                        <li><a href="servicesAdministratifs.php">Administratif</a></li>
+                        <li><a href="servicesInternet.php">Internet</a></li>
+                        <li><a href="servicesRedactionsCorrections.php">Rédactions & Corrections</a></li>
                     </ul>
                 </li>
                 <li class="dropdown">
-                    <a>Tarifs</a>
+                    <div class="dropdown-toggle">
+                        <a>Tarifs</a>
+                    </div>
                     <ul class="submenu">
                         <li><a href="tarifsAdministratifs.php">Administratif</a></li>
-                        <li><a href="internet.php">Internet</a></li>
-                        <li><a href="redactions-corrections.php">Rédactions & Corrections</a></li>
+                        <li><a href="tarifsInternet.php">Internet</a></li>
+                        <li><a href="tarifsRedactionsCorrections.php">Rédactions & Corrections</a></li>
                     </ul>
                 </li>
                 <li><a href="cgv.php">CGV</a></li>
@@ -77,6 +86,8 @@
         <p>&copy; 2025 Jolan LANQUETIN - Tous droits réservés.</p>
     </div>
 </footer>
+
+<script src="js/menu.js"></script>
 
 </body>
 </html>

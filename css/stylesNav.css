@@ -1,50 +1,53 @@
-/* Menu de navigation */
+/* ========== NAVIGATION PRINCIPALE ========== */
+
 nav {
-    background-color: #333; /* Couleur de fond sombre pour le menu */
+    background-color: #333;
     padding: 10px 0;
 }
 
-nav ul {
+.nav-list {
     list-style: none;
     display: flex;
-    justify-content: center; /* Centrer les liens horizontalement */
+    justify-content: center;
     gap: 20px;
-    margin: 0; /* Supprimer les marges par défaut */
+    margin: 0;
+    padding: 0;
 }
 
-nav ul li {
-    position: relative; /* Nécessaire pour les sous-menus */
+.nav-list li {
+    position: relative;
 }
 
-nav ul li a {
-    color: #ffffff; /* Texte en blanc */
+.nav-list li a {
+    color: #fff;
     text-decoration: none;
     font-size: 1.2rem;
     padding: 8px 16px;
-    display: block; /* Pour que le padding s'applique sur toute la largeur du lien */
-    transition: color 0.3s ease, background-color 0.3s ease; /* Animation de couleur */
+    display: block;
+    transition: color 0.3s ease, background-color 0.3s ease;
 }
 
-nav ul li a:hover {
-    color: #e48307; /* Changer la couleur en doré clair au survol */
-    background-color: rgba(228, 131, 7, 0.2); /* Fond doré clair au survol */
+.nav-list li a:hover {
+    color: #e48307;
+    background-color: rgba(228, 131, 7, 0.2);
 }
 
-/* Menu déroulant */
-nav ul li.dropdown:hover .submenu {
-    display: block; /* Afficher les sous-menus lors du survol */
+/* ========== SOUS-MENUS SUR ORDINATEUR ========== */
+
+.nav-list li.dropdown:hover .submenu {
+    display: block;
 }
 
 .submenu {
-    display: none; /* Masquer les sous-menus par défaut */
+    display: none;
     position: absolute;
-    top: 100%; /* Placer sous l'élément parent */
+    top: 100%;
     left: 0;
-    background-color: #444; /* Fond sombre pour les sous-menus */
-    border-radius: 4px; /* Arrondir les bords */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Ombre portée pour plus de visibilité */
+    background-color: #444;
+    border-radius: 4px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     min-width: 160px;
-    z-index: 10; /* Assurer que le menu déroulant est au-dessus des autres éléments */
+    z-index: 10;
 }
 
 .submenu li {
@@ -52,77 +55,143 @@ nav ul li.dropdown:hover .submenu {
 }
 
 .submenu a {
-    color: #ffffff;
+    color: #fff;
     padding: 10px 16px;
     font-size: 1rem;
 }
 
 .submenu a:hover {
-    background-color: #e48307; /* Fond doré clair au survol des sous-menus */
-    color: #ffffff; /* Texte toujours blanc */
+    background-color: #e48307;
+    color: #fff;
 }
 
-/* Responsive Design */
+/* ========== BOUTON MENU MOBILE ========== */
+
+.hamburger {
+    display: none;
+}
+
+.hamburger-text {
+    margin-left: 8px;
+    font-size: 1rem;
+    color: #e48307;
+}
+
+/* ========== OVERLAY ========== */
+
+.menu-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 100vw;
+    backdrop-filter: blur(5px);
+    background-color: rgba(0, 0, 0, 0.3);
+    z-index: 900;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.menu-overlay.active {
+    display: block;
+    opacity: 1;
+}
+
+/* ========== RESPONSIVE ========== */
+
 @media (max-width: 768px) {
-    nav {
-        position: relative;
-        top: 0;
-        right: 0;
-        text-align: center;
-    }
-
-    /* Simplification du menu en colonne pour les petits écrans */
-    nav ul {
-        flex-direction: column; /* Passer en colonne sur mobile */
-        gap: 10px;
-    }
-
-    nav ul li a {
-        font-size: 1rem; /* Ajuster la taille des liens */
-        padding: 12px; /* Plus de padding pour les liens mobiles */
-    }
-
-    .submenu {
-        position: static; /* Modifier la position du sous-menu pour les petits écrans */
-        box-shadow: none; /* Enlever l'ombre pour un meilleur rendu mobile */
-        background-color: #444; /* Assurer une couleur de fond uniforme */
-        min-width: 100%; /* S'assurer que le sous-menu s'étend sur toute la largeur */
-        display: none; /* Cacher le sous-menu par défaut */
-    }
-
-    /* Révéler les sous-menus sur mobile lors du clic (ou tap) */
-    nav ul li.dropdown.active .submenu {
-        display: block; /* Afficher sous-menu lorsque l'élément est activé */
-    }
-
-    /* Style pour le bouton de menu hamburger */
+    /* Bouton hamburger visible */
     .hamburger {
-        display: block; /* Afficher le bouton hamburger en mobile */
-        background-color: #333;
+        display: flex;
+        align-items: center;
+        background: none;
         border: none;
-        color: #ffffff;
-        font-size: 1.5rem;
-        padding: 10px 15px;
+        font-size: 2rem;
+        color: #e48307;
+        padding: 10px 20px;
         cursor: pointer;
+        position: static;
+        top: 150px;
+        left: 10px;
+        z-index: 1100;
     }
 
-    .hamburger-menu {
+    /* Menu mobile */
+    .nav-list {
         display: none;
         flex-direction: column;
+        align-items: flex-start;
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 100vh;
+        width: 220px;
+        background-color: #333;
+        padding: 60px 20px 20px 20px;
+        gap: 10px;
+        overflow-y: auto;
+        z-index: 1000;
+        opacity: 0;
+        transform: translateX(-100%);
+        transition: transform 0.3s ease, opacity 0.3s ease;
+        pointer-events: none;
+    }
+
+    .nav-list.active {
+        display: flex;
+        opacity: 1;
+        transform: translateX(0);
+        pointer-events: auto;
+    }
+
+    .nav-list li {
         width: 100%;
     }
 
-    .hamburger-menu.active {
-        display: flex; /* Afficher le menu hamburger lorsqu'il est actif */
-    }
-
-    .hamburger-menu li {
+    .nav-list li a {
         width: 100%;
-        text-align: center;
+        padding: 12px 20px;
+        font-size: 1.1rem;
     }
 
-    .hamburger-menu li a {
-        padding: 15px;
-        font-size: 1.2rem;
+    /* Sous-menus toujours visibles */
+    .submenu {
+        display: block;
+        position: static;
+        background-color: #444;
+        margin-left: 10px;
+        padding-left: 10px;
+        margin-top: 5px;
+        animation: slideIn 0.3s ease;
+    }
+
+    .submenu a {
+        padding-left: 20px;
+        transition: background-color 0.2s ease;
+    }
+
+    @keyframes slideIn {
+        from {
+            opacity: 0;
+            transform: translateY(-5px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    /* Supprimer le comportement de survol en mobile */
+    .dropdown:hover .submenu,
+    .dropdown:focus-within .submenu {
+        display: block;
+    }
+
+    /* Liens non cliquables (ex: Mes services) */
+    .noclick {
+        pointer-events: none;
+        color: #aaa;
+        cursor: default;
     }
 }
