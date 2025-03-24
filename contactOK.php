@@ -54,17 +54,7 @@
     </div>
 </header>
 
-<section id="content">
-    <div class="container">
-
-        <div id="services" class="service">
-            <h2>Grille Tarifaire</h2>
-        </div>
-
-        <img src="images/AideAdministrative.png" alt="Web" class="AideAdministrative">
-
-    </div>
-</section>
+<h2>Votre message a bien été envoyé !</h2>
 
 <footer>
     <div>
