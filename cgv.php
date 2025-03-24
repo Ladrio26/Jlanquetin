@@ -34,13 +34,13 @@
                 <li class="dropdown">
                     <a>Mes services</a>
                     <ul class="submenu">
-                        <li><a href="services.php">Administratif</a></li>
+                        <li><a href="servicesAdministratifs.php">Administratif</a></li>
                         <li><a href="internet.php">Internet</a></li>
                         <li><a href="redactions-corrections.php">Rédactions & Corrections</a></li>
                     </ul>
                 </li>
                 <li class="dropdown">
-                    <a href="tarifs.php">Tarifs</a>
+                    <a href="tarifsAdministratifs.php">Tarifs</a>
                     <ul class="submenu">
                         <li><a href="administratif.php">Administratif</a></li>
                         <li><a href="internet.php">Internet</a></li>

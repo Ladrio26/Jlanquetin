@@ -6,7 +6,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $subject = htmlspecialchars($_POST['subject']);
 
     // Code pour envoyer l'email
-    $to = "lanquetin.jolan@gmail.com";  // ton adresse mail
+    $to = "ladrio@hotmail.fr";  // ton adresse mail
     $email_subject = "Sujet : $subject";
     $body = "Nom: $name\nEmail: $email\nMessage:\n$message";
     $headers = "From: $email";
@@ -16,8 +16,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         header("Location: contactOK.php");
         exit(); // S'assurer que le script s'arrête après la redirection
     } else {
-        // Redirection vers la page d'erreur
-        header("Location: contactError.php");
+        // Capture l'erreur liée à l'envoi de l'email
+        $error = error_get_last();
+
+        // Redirection vers la page d'erreur avec le message d'erreur
+        header("Location: contactError.php?error=" . urlencode($error['message']));
         exit(); // S'assurer que le script s'arrête après la redirection
     }
 }

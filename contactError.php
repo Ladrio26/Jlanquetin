@@ -11,15 +11,6 @@
     <link rel="stylesheet" href="css/stylesDeroulant.css">
     <link rel="stylesheet" href="css/stylesImages.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> <!-- jQuery pour simplifier le script -->
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=AW-16938109963"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-
-        gtag('config', 'AW-16938109963');
-    </script>
 </head>
 <body>
 
@@ -34,27 +25,27 @@
                 <li class="dropdown">
                     <a>Mes services</a>
                     <ul class="submenu">
-                        <li><a href="services.php">Administratif</a></li>
+                        <li><a href="servicesAdministratifs.php">Administratif</a></li>
                         <li><a href="internet.php">Internet</a></li>
                         <li><a href="redactions-corrections.php">Rédactions & Corrections</a></li>
                     </ul>
                 </li>
-                <li class="dropdown">
-                    <a href="tarifs.php">Tarifs</a>
-                    <ul class="submenu">
-                        <li><a href="administratif.php">Administratif</a></li>
-                        <li><a href="internet.php">Internet</a></li>
-                        <li><a href="redactions-corrections.php">Rédactions & Corrections</a></li>
-                    </ul>
-                </li>
-                <li><a href="cgv.php">CGV</a></li>
-                <li><a href="mentions-legales.php">Mentions légales</a></li>
+                <li><a href="contact.php">Contact</a></li>
             </ul>
         </nav>
     </div>
 </header>
 
 <h2>Une erreur est survenue</h2>
+
+<?php
+// Récupération du message d'erreur via l'URL
+if (isset($_GET['error'])) {
+    echo '<p style="color:red;">Erreur : ' . htmlspecialchars($_GET['error']) . '</p>';
+} else {
+    echo '<p>Une erreur inconnue est survenue.</p>';
+}
+?>
 
 <footer>
     <div>
