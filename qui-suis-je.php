@@ -73,7 +73,7 @@
             <p>Mon parcours professionnel me permet aujourd'hui de combiner une expérience approfondie dans l'administratif avec une expertise en développement, afin d’offrir des services adaptés aux besoins de mes clients, avec rigueur et innovation.</p>
         </div>
 
-        <img src="images/BureauPcPortable.jpg" alt="Web" class="bureauPcPortable">
+        <img src="images/pcJolan.png" alt="Web" class="pcJolan">
 
     </div>
 </section>

@@ -1,39 +1,53 @@
 .ordiportable {
     width: 50%; /* L'image occupera toute la largeur de son conteneur */
     height: auto; /* La hauteur sera ajustée pour garder le ratio */
+    object-fit: cover;
 }
 
 .administratif {
     width: 50%; /* L'image occupera toute la largeur de son conteneur */
     height: auto; /* La hauteur sera ajustée pour garder le ratio */
+    object-fit: cover;
 }
 
 .PCportable {
     width: 50%; /* L'image occupera toute la largeur de son conteneur */
     height: auto; /* La hauteur sera ajustée pour garder le ratio */
+    object-fit: cover;
 }
 
 .Meeting {
     width: 40%; /* L'image occupera toute la largeur de son conteneur */
     height: auto; /* La hauteur sera ajustée pour garder le ratio */
+    object-fit: cover;
 }
 
 .AideAdministrative {
     width: 50%; /* L'image occupera toute la largeur de son conteneur */
     height: auto; /* La hauteur sera ajustée pour garder le ratio */
+    object-fit: cover;
 }
 
 .redaction {
     width: 50%; /* L'image occupera toute la largeur de son conteneur */
     height: auto; /* La hauteur sera ajustée pour garder le ratio */
+    object-fit: cover;
 }
 
 .website {
     width: 50%; /* L'image occupera toute la largeur de son conteneur */
     height: auto; /* La hauteur sera ajustée pour garder le ratio */
+    object-fit: cover;
 }
 
 .bureauPcPortable {
     width: 50%; /* L'image occupera toute la largeur de son conteneur */
     height: auto; /* La hauteur sera ajustée pour garder le ratio */
+    object-fit: cover;
+}
+
+.pcJolan {
+    width: 50%; /* L'image occupera toute la largeur de son conteneur */
+    height: auto; /* La hauteur sera ajustée pour garder le ratio */
+    object-fit: cover;
 }
