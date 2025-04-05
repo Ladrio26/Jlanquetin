@@ -1,0 +1,136 @@
+/* Container principal pour l'ensemble des sections */
+.container {
+    display: flex;
+    justify-content: space-between; /* Espacement égal entre les sections */
+    gap: 5px; /* Espace entre les sections */
+    margin-top: 30px;
+    padding: 0 20px;
+    background-color: #1f1f1f; /* Fond général plus sombre */
+    border-radius: 10px;
+}
+
+/* Section gauche (Joueur et 50/50) */
+.section-left {
+    width: 25%; /* Largeur réduite pour les sections de gauche */
+    padding: 20px;
+}
+
+/* Section du milieu (Partie) */
+.section-center {
+    width: 25%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #1f1f1f; /* Fond légèrement plus clair que la section globale */
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+/* Section droite (Composition) - Cette section prendra toute la place restante */
+.section-large {
+    flex-grow: 1; /* Prendre toute la place restante */
+    background-color: #1f1f1f; /* Fond foncé avec plus de contraste */
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.3);
+    margin-top: 20px; /* Espace au-dessus de la section */
+}
+
+/* Style pour les formulaires */
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+/* Style des titres */
+h2, h3 {
+    font-family: 'Arial', sans-serif;
+    font-size: 18px;
+    text-align: center;
+    color: #5dade2; /* Texte clair pour contraster avec le fond sombre */
+}
+
+/* Amélioration des champs de formulaire */
+input, select {
+    padding: 12px;
+    border-radius: 5px;
+    border: 1px solid #444;
+    font-size: 16px;
+    background-color: #333;
+    color: #fff;
+}
+
+/* Différencier la section de composition : plus petite et texte plus léger */
+.section-large h2, .section-large h3 {
+    font-size: 20px;
+    color: #5dade2; /* Une couleur douce pour les titres */
+}
+
+/* Ajouter des ombres pour les éléments de formulaire */
+input, select {
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Boutons */
+input[type="submit"] {
+    background-color: #3498db; /* Bleu vif pour attirer l'attention */
+    color: white;
+    border: none;
+    padding: 14px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+input[type="submit"]:hover {
+    background-color: #2980b9; /* Assombrir au survol */
+}
+
+/* Cacher des champs si nécessaire */
+.hidden {
+    display: none;
+}
+
+/* Ajout d'un fond plus clair dans les sections */
+section form {
+    background-color: #2d2d2d; /* Fond sombre mais pas trop agressif */
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.4);
+    border-radius: 10px;
+    padding: 20px;
+}
+
+/* Couleur de fond de la page */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #121212; /* Fond global sombre */
+    color: #f1f1f1; /* Texte clair pour un contraste agréable */
+    margin: 0;
+    padding: 0;
+}
+
+/* Ajout de marges et d'espaces de mise en page pour les sections */
+.section-left, .section-center, .section-large {
+    margin-bottom: 10px;
+}
+
+h2 {
+    font-size: 22px;
+    margin-bottom: 15px;
+}
+
+h3 {
+    font-size: 16px;
+}
+
+/* Ajouter une légère bordure arrondie aux inputs et selects */
+input, select {
+    border-radius: 8px;
+}
+
+/* Espacement entre les éléments du formulaire */
+form input, form select {
+    margin-bottom: 15px;
+}

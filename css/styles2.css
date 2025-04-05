@@ -64,6 +64,12 @@ button:hover {
     background-color: #0099cc;
 }
 
+.small-title {
+    font-size: 20px; /* Ajuste la taille comme tu le souhaites */
+    font-weight: normal;
+}
+
+
 /* Responsive Design */
 @media (max-width: 768px) {
     .container {

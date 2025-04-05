@@ -1,0 +1,105 @@
+/* Styles globaux */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #1f1f1f;
+    color: #f1f1f1;
+}
+
+/* Container général */
+.container {
+    width: 90%; /* Augmenté pour avoir plus d'espace */
+    margin: 20px auto;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+/* Formulaire de filtres */
+.filter-form {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin-bottom: 30px;
+    background-color: #2d2d2d;
+    color: #2980b9;
+    padding: 10px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 900px; /* Limiter la largeur du formulaire */
+    margin: 0 auto; /* Centrer le formulaire */
+}
+
+/* Chaque élément de filtre */
+.filter-item {
+    margin-bottom: 10px;
+    flex: 1 1 30%;
+    max-width: 250px; /* Limiter la largeur des éléments */
+}
+
+.filter-item label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.filter-item select, .filter-item input {
+    width: 100%;
+    padding: 8px;
+    border-radius: 4px;
+    border: 1px solid #2d2d2d;
+}
+
+/* Section des tableaux */
+.section-large {
+    background-color: #2d2d2d;
+    color: #2980b9;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 30px;
+}
+
+.section-large h2 {
+    margin-top: 0;
+    color: #2980b9;
+    font-size: 24px;
+    margin-bottom: 15px;
+}
+
+.stats-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+}
+
+.stats-table th, .stats-table td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+.stats-table th {
+    background-color: #e48307;
+    color: white;
+}
+
+.stats-table tr:nth-child(even) {
+    background-color: #2d2d2d;
+}
+
+.stats-table tr:hover {
+    background-color: #2980b9;
+}
+
+.stats-table td {
+    font-size: 16px;
+}
+
+/* Section de filtre avec un fond légèrement gris */
+.filter-form {
+    background-color: #2d2d2d;
+    padding: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+}
