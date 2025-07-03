@@ -95,14 +95,15 @@ if (isset($_POST['addGame'])) {
     $lobbyID = $_POST['lobbyID']; // ID du lobby
     $gameMaxTasks = $_POST['gameMaxTasks']; // Nombre de tâches max
     $gameNumber = $_POST['gameNumber']; // N° de la game dans la soirée
+    $gameMap = $_POST['gameMap']; // Récupérer la map sélectionnée
 
     // Insérer directement la partie sans vérifier si elle existe déjà
     $addGameQuery = "
-        INSERT INTO partie (Par_Dat, Par_Win_Equ_ID, Par_Lob_ID, Par_Task_Max, Par_Num_Dat)
-        VALUES (?, ?, ?, ?, ?)
+        INSERT INTO partie (Par_Dat, Par_Win_Equ_ID, Par_Lob_ID, Par_Task_Max, Par_Num_Dat, Par_Map)
+        VALUES (?, ?, ?, ?, ?, ?)
     ";
     $stmt = $pdo->prepare($addGameQuery);
-    $stmt->execute([$gameDate, $winningTeam, $lobbyID, $gameMaxTasks, $gameNumber]);
+    $stmt->execute([$gameDate, $winningTeam, $lobbyID, $gameMaxTasks, $gameNumber, $gameMap]);
     echo "Partie ajoutée avec succès!";
 }
 
@@ -299,6 +300,17 @@ if(isset($_POST['gameIDSearch'])) {
             </select>
             <h3>Nombre de tâches max</h3>
             <input type="number" name="gameMaxTasks" min="0" required>
+            <h3>Map</h3>
+            <select name="gameMap" required>
+                <?php
+                // Récupérer les maps distinctes dans la table partie
+                $mapsQuery = "SELECT DISTINCT Par_Map FROM partie";
+                $mapsResult = $pdo->query($mapsQuery);
+                while ($row = $mapsResult->fetch()) {
+                    echo "<option value='" . $row['Par_Map'] . "'>" . $row['Par_Map'] . "</option>";
+                }
+                ?>
+            </select>
             <h3>Propriétaire du Lobby</h3>
             <select name="lobbyID">
                 <?php

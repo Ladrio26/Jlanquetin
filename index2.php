@@ -44,7 +44,7 @@
         <nav>
             <ul class="nav-list">
                 <li><a href="index.php">Accueil</a></li>
-                <li><a href="qui-suis-je.php">Qui suis-je ?</a></li>
+                <li><a href="Moi.php">Qui suis-je ?</a></li>
                 <li class="dropdown">
                     <div class="dropdown-toggle">
                         <a>Mes services</a>
@@ -65,7 +65,7 @@
                         <li><a href="tarifsRedactionsCorrections.php">Rédactions & Corrections</a></li>
                     </ul>
                 </li>
-                <li><a href="mentions-legales.php">Mentions légales</a></li>
+                <li><a href="Mentions-Legales.php">Mentions légales</a></li>
             </ul>
         </nav>
 

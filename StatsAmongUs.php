@@ -5,6 +5,7 @@ include('db.php'); // Inclure la connexion PDO à la base de données
 $lobbyFilter = isset($_POST['lobbyFilter']) ? $_POST['lobbyFilter'] : '';
 $dateFilter = isset($_POST['dateFilter']) ? $_POST['dateFilter'] : '';
 $playerFilter = isset($_POST['playerFilter']) ? $_POST['playerFilter'] : '';
+$mapFilter = isset($_POST['mapFilter']) ? $_POST['mapFilter'] : '';
 
 // Récupérer les rôles pour le filtre
 $roles = ['Shériff', 'Maire', 'Ingénieur', 'Medic', 'Ninja', 'EvilGuesser', 'Morphling', 'Jester', 'Vulture'];
@@ -48,8 +49,12 @@ if ($dateFilter != '') {
 if ($playerFilter != '') {
     $statsQuery .= " AND j.Jou_ID = ?";
 }
+if ($mapFilter != '') {
+    $statsQuery .= " AND p.Par_Map = ?"; // Appliquer le filtre de Map
+}
 
-// Préparer la requête
+// Préparer les paramètres pour la requête
+$params = [];
 if ($lobbyFilter != '') {
     $params[] = $lobbyFilter;
 }
@@ -59,46 +64,9 @@ if ($dateFilter != '') {
 if ($playerFilter != '') {
     $params[] = $playerFilter;
 }
-
-
-// Requête pour les statistiques des joueurs (nombre de victoires avec le rôle)
-$rolesWinsQuery = "
-    SELECT j.Jou_Nom, 
-           COUNT(DISTINCT CASE WHEN r.Rol_Nom = ? AND p.Par_Win_Equ_ID = r.Rol_Equ_ID THEN p.Par_ID END) AS Role_Wins, 
-           COUNT(DISTINCT p.Par_ID) AS Total_Games
-    FROM composition c
-    JOIN joueur j ON c.Com_Jou_ID = j.Jou_ID
-    JOIN partie p ON c.Com_Par_ID = p.Par_ID
-    JOIN role r ON c.Com_Rol_ID = r.Rol_ID
-    WHERE 1
-";
-
-// Appliquer les filtres
-if ($lobbyFilter != '') {
-    $rolesWinsQuery .= " AND p.Par_Lob_ID = ?";
+if ($mapFilter != '') {
+    $params[] = $mapFilter; // Ajouter le filtre de la carte
 }
-if ($dateFilter != '') {
-    $rolesWinsQuery .= " AND p.Par_Dat = ?";
-}
-if ($playerFilter != '') {
-    $rolesWinsQuery .= " AND j.Jou_ID = ?";
-}
-
-// Préparer la requête
-$rolesWinsStmt = $pdo->prepare($rolesWinsQuery);
-if ($lobbyFilter != '') {
-    $params[] = $lobbyFilter;
-}
-if ($dateFilter != '') {
-    $params[] = $dateFilter;
-}
-if ($playerFilter != '') {
-    $params[] = $playerFilter;
-}
-
-$rolesWinsResult = $rolesWinsStmt->fetchAll();
-
-$rolesWinsQuery .= " GROUP BY j.Jou_Nom";
 
 $statsQuery .= " GROUP BY j.Jou_Nom";
 
@@ -114,6 +82,11 @@ if ($dateFilter != '') {
 if ($playerFilter != '') {
     $params[] = $playerFilter;
 }
+if ($mapFilter != '') {
+    $params[] = $mapFilter;
+}
+
+$statsStmt = $pdo->prepare($statsQuery);
 $statsStmt->execute($params);
 $statsResult = $statsStmt->fetchAll();
 
@@ -132,6 +105,140 @@ $rolesPlayedStmt = $pdo->prepare($rolesPlayedQuery);
 $rolesPlayedStmt->execute();
 $rolesPlayedResult = $rolesPlayedStmt->fetchAll();
 
+// Requête pour obtenir le nombre de parties et les victoires par map
+$mapStatsQuery = "
+    SELECT p.Par_Map,
+           COUNT(DISTINCT p.Par_ID) AS Total_Games,
+           COUNT(DISTINCT CASE WHEN r.Rol_Equ_ID = 1 AND p.Par_Win_Equ_ID = r.Rol_Equ_ID THEN p.Par_ID END) AS Crewmate_Wins,
+           COUNT(DISTINCT CASE WHEN r.Rol_Equ_ID = 2 AND p.Par_Win_Equ_ID = r.Rol_Equ_ID THEN p.Par_ID END) AS Impostor_Wins,
+           COUNT(DISTINCT CASE WHEN r.Rol_Nom = 'Jester' AND p.Par_Win_Equ_ID = r.Rol_Equ_ID THEN p.Par_ID END) AS Jester_Wins,
+           COUNT(DISTINCT CASE WHEN r.Rol_Nom = 'Vulture' AND p.Par_Win_Equ_ID = r.Rol_Equ_ID THEN p.Par_ID END) AS Vulture_Wins
+    FROM partie p
+    JOIN composition c ON p.Par_ID = c.Com_Par_ID
+    JOIN role r ON c.Com_Rol_ID = r.Rol_ID
+    WHERE 1
+";
+
+// Appliquer le filtre sur la map si elle est définie
+if ($mapFilter != '') {
+    $mapStatsQuery .= " AND p.Par_Map = ?";
+}
+
+// Préparer la requête
+$mapStatsStmt = $pdo->prepare($mapStatsQuery);
+
+// Vérifier si le filtre de la map est défini
+if ($mapFilter != '') {
+    // Si le filtre de map est défini, on passe le paramètre à execute()
+    $mapStatsStmt->execute([$mapFilter]);
+} else {
+    // Si le filtre de map est vide, on exécute la requête sans paramètre
+    $mapStatsStmt->execute();
+}
+
+// Récupérer les résultats
+$mapStatsResult = $mapStatsStmt->fetchAll();
+
+// Requête pour récupérer les duos gagnants dans l'équipe des imposteurs
+$duosQuery = "
+    SELECT c.Com_Par_ID, c.Com_Jou_ID, p.Par_Win_Equ_ID
+    FROM composition c
+    JOIN partie p ON c.Com_Par_ID = p.Par_ID
+    WHERE p.Par_Win_Equ_ID = 2  -- Gagnants sont les imposteurs
+    AND c.Com_Rol_ID IN (SELECT Rol_ID FROM role WHERE Rol_Equ_ID = 2)  -- L'équipe des imposteurs
+";
+$duosStmt = $pdo->prepare($duosQuery);
+$duosStmt->execute();
+
+// Tableau pour stocker les duos avec leurs fréquences
+$duos = [];
+
+// Créer les duos pour chaque partie gagnée par les imposteurs
+while ($row = $duosStmt->fetch()) {
+    // Récupérer les joueurs dans cette partie
+    $gameID = $row['Com_Par_ID'];
+
+    // Requête pour récupérer les joueurs de cette partie qui étaient dans l'équipe des imposteurs
+    $playersQuery = "
+        SELECT c.Com_Jou_ID 
+        FROM composition c
+        JOIN role r ON c.Com_Rol_ID = r.Rol_ID
+        WHERE c.Com_Par_ID = ? AND r.Rol_Equ_ID = 2  -- Imposteurs uniquement
+    ";
+    $playersStmt = $pdo->prepare($playersQuery);
+    $playersStmt->execute([$gameID]);
+    $players = $playersStmt->fetchAll(PDO::FETCH_COLUMN);
+
+    // Créer des duos et les ajouter au tableau
+    for ($i = 0; $i < count($players); $i++) {
+        for ($j = $i + 1; $j < count($players); $j++) {
+            // Créer un duo trié pour éviter les doublons (A-B et B-A sont considérés comme le même)
+            $duo = [$players[$i], $players[$j]];
+            sort($duo);
+            $duoKey = implode("-", $duo);  // Créer une clé unique pour chaque duo
+
+            if (isset($duos[$duoKey])) {
+                $duos[$duoKey]++;  // Incrémenter la fréquence du duo
+            } else {
+                $duos[$duoKey] = 1;  // Premier enregistrement du duo
+            }
+        }
+    }
+}
+
+// Trier les duos par fréquence (du plus fréquent au moins fréquent)
+arsort($duos);
+
+// Requête pour récupérer les duos d'imposteurs qui ont perdu (parties où l'équipe des imposteurs a perdu)
+$defeatsQuery = "
+    SELECT c.Com_Par_ID, c.Com_Jou_ID, p.Par_Win_Equ_ID
+    FROM composition c
+    JOIN partie p ON c.Com_Par_ID = p.Par_ID
+    WHERE p.Par_Win_Equ_ID != 2  -- Gagnant n'est pas l'équipe des imposteurs
+    AND c.Com_Rol_ID IN (SELECT Rol_ID FROM role WHERE Rol_Equ_ID = 2)  -- L'équipe des imposteurs
+";
+$defeatsStmt = $pdo->prepare($defeatsQuery);
+$defeatsStmt->execute();
+
+// Tableau pour stocker les duos avec leurs fréquences de défaites
+$duosDefeats = [];
+
+// Créer les duos pour chaque partie où les imposteurs ont perdu
+while ($row = $defeatsStmt->fetch()) {
+    // Récupérer les joueurs dans cette partie
+    $gameID = $row['Com_Par_ID'];
+
+    // Requête pour récupérer les joueurs de cette partie qui étaient dans l'équipe des imposteurs
+    $playersQuery = "
+        SELECT c.Com_Jou_ID 
+        FROM composition c
+        JOIN role r ON c.Com_Rol_ID = r.Rol_ID
+        WHERE c.Com_Par_ID = ? AND r.Rol_Equ_ID = 2  -- Imposteurs uniquement
+    ";
+    $playersStmt = $pdo->prepare($playersQuery);
+    $playersStmt->execute([$gameID]);
+    $players = $playersStmt->fetchAll(PDO::FETCH_COLUMN);
+
+    // Créer des duos et les ajouter au tableau
+    for ($i = 0; $i < count($players); $i++) {
+        for ($j = $i + 1; $j < count($players); $j++) {
+            // Créer un duo trié pour éviter les doublons (A-B et B-A sont considérés comme le même)
+            $duo = [$players[$i], $players[$j]];
+            sort($duo);
+            $duoKey = implode("-", $duo);  // Créer une clé unique pour chaque duo
+
+            // Ajouter les données au tableau des duos
+            if (isset($duosDefeats[$duoKey])) {
+                $duosDefeats[$duoKey]['frequency']++;  // Incrémenter la fréquence du duo
+            } else {
+                $duosDefeats[$duoKey] = ['frequency' => 1];  // Premier enregistrement du duo
+            }
+        }
+    }
+}
+
+// Trier les duos par fréquence (du plus fréquent au moins fréquent)
+arsort($duosDefeats);
 ?>
 
 <!DOCTYPE html>
@@ -187,6 +294,21 @@ $rolesPlayedResult = $rolesPlayedStmt->fetchAll();
             }
             ?>
         </select>
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+    <label for="mapFilter" class="block text-sm font-medium text-gray-700">Map :</label>
+    <select name="mapFilter" id="mapFilter" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm text-sm">
+        <option value="">Toutes</option>
+        <?php
+        // Récupérer les valeurs distinctes de Par_Map dans la table partie
+        $mapsQuery = "SELECT DISTINCT Par_Map FROM partie";
+        $mapsResult = $pdo->query($mapsQuery);
+        while ($row = $mapsResult->fetch()) {
+            echo "<option value='" . $row['Par_Map'] . "' " . ($mapFilter == $row['Par_Map'] ? "selected" : "") . ">" . $row['Par_Map'] . "</option>";
+        }
+        ?>
+    </select>
     </div>
 
     <div class="text-center mt-4">
@@ -404,7 +526,7 @@ $rolesPlayedResult = $rolesPlayedStmt->fetchAll();
                 <tr class="bg-gray-500">
                     <th class="px-2 py-1 text-white w-auto">Nom</th>
                     <th class="px-2 py-1 text-white w-auto">Nb</th>
-                    <th class="px-2 py-1 text-white w-auto">X Parties</th>
+                    <th class="px-2 py-1 text-white w-auto">%</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -412,23 +534,26 @@ $rolesPlayedResult = $rolesPlayedStmt->fetchAll();
                 usort($statsResult, function($a, $b) {
                     // Calcul du nombre moyen de parties avant d'être tué au T1 pour chaque joueur
                     $averagePartiesA = ($a['T1_Count'] > 0) ? (($a['Crewmate_Games'] + $a['Jester_Games'] + $a['Vulture_Games']) / $a['T1_Count']) : PHP_INT_MAX;
-                    $averagePartiesB = ($b['T1_Count'] > 0) ? (($b['Crewmate_Games'] + $b['Jester_Games'] + $b['Vulture_Games']) / $b['T1_Count']) : PHP_INT_MAX;
+                    $averagePartiesB = ($b['T1_Count'] > 0) ? (($b['T1_Count']) / ($b['Crewmate_Games'] + $b['Jester_Games'] + $b['Vulture_Games'])) : PHP_INT_MAX;
                     return $averagePartiesA <=> $averagePartiesB; // Trie par nombre moyen de parties avant d'être tué au T1
                 });
 
                 foreach ($statsResult as $row) {
                     if ($row['T1_Count'] == 0) continue;
-                    $averageParties = ($row['T1_Count'] > 0) ? number_format(($row['Crewmate_Games'] + $row['Jester_Games'] + $row['Vulture_Games']) / $row['T1_Count'], 2) : "N/A";
+                    // Calcul du pourcentage de fois tué au T1
+                    $totalGames = $row['Crewmate_Games'] + $row['Jester_Games'] + $row['Vulture_Games'];
+                    $percentage = ($totalGames > 0) ? number_format(($row['T1_Count'] / $totalGames) * 100, 2) : 0;
                     echo "<tr class='bg-white border-t'>
-                            <td class='px-2 py-1'>" . $row['Jou_Nom'] . "</td>
-                            <td class='px-2 py-1'>" . $row['T1_Count'] . "</td>
-                            <td class='px-2 py-1'>" . $averageParties . "</td>
-                          </tr>";
+                    <td class='px-2 py-1'>" . $row['Jou_Nom'] . "</td>
+                    <td class='px-2 py-1'>" . $row['T1_Count'] . "</td>
+                    <td class='px-2 py-1'>" . $percentage . "%</td>
+                  </tr>";
                 }
                 ?>
                 </tbody>
             </table>
         </div>
+
 
         <!-- Tableau 2 : Voté à tort -->
         <div>
@@ -797,105 +922,157 @@ $rolesPlayedResult = $rolesPlayedStmt->fetchAll();
                 </tbody>
             </table>
         </div>
+    </div>
 
-<h2>Test de graphiques (En travaux)</h2>
+    <h3 class="text-xl font-semibold mb-4">Stats par Map</h3>
+    <!-- Affichage des statistiques par map -->
+        <?php foreach ($mapStatsResult as $row) { ?>
+            <div class="bg-gray-300 p-6 rounded-lg shadow-md mb-6 grid grid-cols-5 w-auto ml-0">
+                <!-- Section de stats -->
+                <div class="bg-white p-4 rounded-lg shadow-sm flex-1 mr-6">
+                    <h4 class="text-lg font-semibold text-gray-800"><?php echo $row['Par_Map']; ?></h4>
+                    <div class="mt-2">
+                        <p class="text-sm text-gray-600"><strong>Nombre de parties jouées :</strong> <?php echo $row['Total_Games']; ?></p>
+                        <p class="text-sm text-gray-600"><strong>Victoires Crewmate :</strong> <?php echo $row['Crewmate_Wins']; ?></p>
+                        <p class="text-sm text-gray-600"><strong>Victoires Imposteur :</strong> <?php echo $row['Impostor_Wins']; ?></p>
+                        <p class="text-sm text-gray-600"><strong>Victoires Jester :</strong> <?php echo $row['Jester_Wins']; ?></p>
+                        <p class="text-sm text-gray-600"><strong>Victoires Vulture :</strong> <?php echo $row['Vulture_Wins']; ?></p>
+                    </div>
+                </div>
 
-            <!-- Graphique des victoires Crewmate -->
-            <div class="mb-6">
-                <h3 class="text-lg font-semibold mb-3">Victoire par rôle</h3>
-                <canvas id="winChart"></canvas>
-                <script>
-                    const ctx = document.getElementById('winChart').getContext('2d');
-                    const winChart = new Chart(ctx, {
-                        type: 'bar',
-                        data: {
-                            labels: ['Crewmate', 'Impostor', 'Jester', 'Vulture'], // Les étiquettes pour chaque rôle
-                            datasets: [{
-                                label: 'Nombre de Victoires',
-                                data: [
-                                    <?php
-                                    $crewmateWins = 0;
-                                    $impostorWins = 0;
-                                    $jesterWins = 0;
-                                    $vultureWins = 0;
-                                    foreach ($statsResult as $row) {
-                                        $crewmateWins += $row['Crewmate_Wins'];
-                                        $impostorWins += $row['Impostor_Wins'];
-                                        $jesterWins += $row['Jester_Wins'];
-                                        $vultureWins += $row['Vulture_Wins'];
-                                    }
-                                    echo "$crewmateWins, $impostorWins, $jesterWins, $vultureWins";
-                                    ?>
-                                ],
-                                backgroundColor: ['rgba(54, 162, 235, 0.2)', 'rgba(255, 99, 132, 0.2)', 'rgba(255, 159, 64, 0.2)', 'rgba(75, 192, 192, 0.2)'],
-                                borderColor: ['rgba(54, 162, 235, 1)', 'rgba(255, 99, 132, 1)', 'rgba(255, 159, 64, 1)', 'rgba(75, 192, 192, 1)'],
-                                borderWidth: 1
-                            }]
-                        },
-                        options: {
-                            scales: {
-                                y: {
-                                    beginAtZero: true
-                                }
-                            }
-                        }
-                    });
-                </script>
-            </div>
-
-
-        <!-- Graphique des ratios Crewmate et Impostor -->
-        <div class="mb-6">
-            <h3 class="text-lg font-semibold mb-3">Ratio Crew vs Impo</h3>
-            <canvas id="crewmateImpostorChart"></canvas>
-            <script>
-                const ctx2 = document.getElementById('crewmateImpostorChart').getContext('2d');
-                const crewmateImpostorChart = new Chart(ctx2, {
-                    type: 'pie',
-                    data: {
-                        labels: ['Crewmate', 'Impostor'],
-                        datasets: [{
-                            label: 'Ratios Crewmate et Impostor',
-                            data: [
-                                <?php
-                                $crewmateRatio = 0;
-                                $impostorRatio = 0;
-                                foreach ($statsResult as $row) {
-                                    if ($row['Total_Games'] > 0) {
-                                        $crewmateRatio += ($row['Crewmate_Games'] / $row['Total_Games']) * 100;
-                                        $impostorRatio += ($row['Impostor_Games'] / $row['Total_Games']) * 100;
-                                    }
-                                }
-                                echo "$crewmateRatio, $impostorRatio";
-                                ?>
-                            ],
-                            backgroundColor: ['rgba(54, 162, 235, 0.2)', 'rgba(255, 99, 132, 0.2)'],
-                            borderColor: ['rgba(54, 162, 235, 1)', 'rgba(255, 99, 132, 1)'],
-                            borderWidth: 1
-                        }]
-                    },
-                    options: {
-                        responsive: true,
-                        plugins: {
-                            legend: {
-                                position: 'top',
+                <!-- Graphique en camembert -->
+                <div>
+                    <canvas id="mapChart-<?php echo $row['Par_Map']; ?>" class="h-70"></canvas>
+                    <script>
+                        const ctx = document.getElementById('mapChart-<?php echo $row['Par_Map']; ?>').getContext('2d');
+                        const mapChart = new Chart(ctx, {
+                            type: 'pie',
+                            data: {
+                                labels: ['Crewmate', 'Impostor', 'Jester', 'Vulture'], // Labels des catégories
+                                datasets: [{
+                                    data: [
+                                        <?php echo $row['Crewmate_Wins']; ?>,
+                                        <?php echo $row['Impostor_Wins']; ?>,
+                                        <?php echo $row['Jester_Wins']; ?>,
+                                        <?php echo $row['Vulture_Wins']; ?>
+                                    ], // Données des victoires pour chaque catégorie
+                                    backgroundColor: [
+                                        'rgba(54, 162, 235, 0.6)', // Bleu pour Crewmate
+                                        'rgba(255, 99, 132, 0.6)', // Rouge pour Impostor
+                                        'rgba(255, 159, 64, 0.6)', // Orange pour Jester
+                                        'rgba(75, 192, 192, 0.6)'  // Vert pour Vulture
+                                    ],
+                                    borderColor: [
+                                        'rgba(54, 162, 235, 1)', // Bleu pour Crewmate
+                                        'rgba(255, 99, 132, 1)', // Rouge pour Impostor
+                                        'rgba(255, 159, 64, 1)', // Orange pour Jester
+                                        'rgba(75, 192, 192, 1)'  // Vert pour Vulture
+                                    ],
+                                    borderWidth: 1
+                                }]
                             },
-                            tooltip: {
-                                callbacks: {
-                                    label: function(tooltipItem) {
-                                        return tooltipItem.label + ": " + tooltipItem.raw.toFixed(2) + "%";
+                            options: {
+                                responsive: true,
+                                plugins: {
+                                    legend: {
+                                        position: 'top',
+                                    },
+                                    tooltip: {
+                                        callbacks: {
+                                            label: function(tooltipItem) {
+                                                return tooltipItem.label + ": " + tooltipItem.raw;
+                                            }
+                                        }
                                     }
                                 }
                             }
-                        }
+                        });
+                    </script>
+                </div>
+            </div>
+        <?php } ?>
+
+    <!-- Affichage des statistiques par duo -->
+    <div class="bg-gray-300 p-6 rounded-lg shadow-md mb-6 grid grid-cols-5 w-auto ml-0">
+        <div>
+            <h2 class="text-2xl font-semibold mb-4">Win des Duos Impo</h2>
+            <table class="min-w-full table-auto bg-white text-xs leading-tight"> <!-- Taille de la police et interligne plus petits -->
+                <thead class="bg-gray-500 text-white">
+                <tr>
+                    <th class="px-4 py-2">Duo</th>
+                    <th class="px-4 py-2">Nb</th>
+                </tr>
+                </thead>
+                <tbody>
+                <?php
+                // Affichage des duos et de leur fréquence
+                foreach ($duos as $duoKey => $frequency) {
+                    $duoPlayers = explode('-', $duoKey);
+                    $playerNames = [];
+
+                    // Récupérer les noms des joueurs pour chaque duo
+                    foreach ($duoPlayers as $playerID) {
+                        $nameQuery = "SELECT Jou_Nom FROM joueur WHERE Jou_ID = ?";
+                        $nameStmt = $pdo->prepare($nameQuery);
+                        $nameStmt->execute([$playerID]);
+                        $player = $nameStmt->fetch();
+                        $playerNames[] = $player['Jou_Nom'];
                     }
-                });
-            </script>
+
+                    // Affichage du duo et de sa fréquence (divisée par 2)
+                    echo "<tr class='text-center'>
+                            <td class='px-4 py-2'>" . implode(" & ", $playerNames) . "</td>
+                            <td class='px-4 py-2'>" . ($frequency / 2) . "</td>  <!-- Fréquence divisée par 2 -->
+                          </tr>";
+                }
+                ?>
+                </tbody>
+            </table>
+        </div>
+
+        <div></div>
+        <!-- Affichage des statistiques des duos d'imposteurs qui ont perdu -->
+
+        <div>
+            <h2 class="text-2xl font-semibold mb-4">Défaites des Duos Impo</h2>
+            <table class="min-w-full table-auto bg-white text-xs leading-tight">
+                <thead class="bg-gray-500 text-white">
+                <tr>
+                    <th class="px-4 py-2">Duo</th>
+                    <th class="px-4 py-2">Nb</th>  <!-- Nombre de fois que ce duo a perdu -->
+                </tr>
+                </thead>
+                <tbody>
+                <?php
+                // Affichage des duos d'imposteurs avec leur fréquence de défaites
+                foreach ($duosDefeats as $duoKey => $data) {
+                    $duoPlayers = explode('-', $duoKey);
+                    $playerNames = [];
+
+                    // Récupérer les noms des joueurs pour chaque duo
+                    foreach ($duoPlayers as $playerID) {
+                        $nameQuery = "SELECT Jou_Nom FROM joueur WHERE Jou_ID = ?";
+                        $nameStmt = $pdo->prepare($nameQuery);
+                        $nameStmt->execute([$playerID]);
+                        $player = $nameStmt->fetch();
+                        $playerNames[] = $player['Jou_Nom'];
+                    }
+
+                    // Affichage du duo et de la fréquence de défaites
+                    echo "<tr class='text-center'>
+                           <td class='px-4 py-2'>" . implode(" & ", $playerNames) . "</td>
+                           <td class='px-4 py-2'>" . ($data['frequency'] / 2) . "</td>  <!-- Fréquence divisée par 2 -->
+                         </tr>";
+                }
+                ?>
+                </tbody>
+            </table>
         </div>
 
 
-
-
     </div>
+
+</div>
+
 </body>
 </html>

@@ -1,4 +1,4 @@
-<div class="space-y-8 bg-gray-800 p-8 rounded-lg shadow-lg">
+<div class="space-y-8">
     <h2 class="text-3xl font-semibold text-blue-500 mb-8 text-center">Contactez-moi</h2>
     <form action="send_message.php" method="post" class="space-y-6">
         <div>
@@ -13,7 +13,7 @@
             <label for="subject" class="block text-sm text-gray-200">Sujet</label>
             <select id="subject" name="subject" required class="w-full p-4 bg-gray-600 text-white rounded-lg shadow-md focus:outline-none focus:ring-2 focus:ring-blue-500">
                 <option value="Demande de renseignements">Demande de renseignements</option>
-                <option value="Déclaration d'impôts">Déclaration d'impôts</option>
+                <option value="Fiscalité">Fiscalité</option>
                 <option value="Gestion des entreprises">Gestion des entreprises</option>
                 <option value="Administratif Général">Administratif Général</option>
                 <option value="Aide Internet">Aide Internet</option>
@@ -21,6 +21,7 @@
                 <option value="Corrections / Relecture de textes">Corrections / Relecture de textes</option>
                 <option value="Site Web">Site Web</option>
                 <option value="Soutien Scolaire">Soutien Scolaire</option>
+                <option value="Généalogie">Généalogie</option>
                 <option value="Autre">Autre</option>
             </select>
         </div>

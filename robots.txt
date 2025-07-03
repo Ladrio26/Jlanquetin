@@ -1,0 +1,36 @@
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://jlanquetin.goodloss.fr/sitemap.xml
+
+# Pages importantes
+Allow: /index.php
+Allow: /Services.php
+Allow: /Tarifs.php
+Allow: /Contact.php
+Allow: /FAQ.php
+Allow: /reservation.php
+Allow: /Moi.php
+
+# Fichiers CSS et JS
+Allow: /css/
+Allow: /js/
+
+# Images
+Allow: /images/
+
+# Empêcher l'indexation des fichiers de traitement
+Disallow: /process_reservation.php
+Disallow: /send_message.php
+Disallow: /contact_form.php
+Disallow: /db.php
+
+# Empêcher l'indexation des pages d'erreur et de confirmation
+Disallow: /contactOK.php
+Disallow: /contactError.php
+Disallow: /reservation_confirmation.php
+Disallow: /reservation_error.php
+
+# Crawl-delay pour éviter de surcharger le serveur
+Crawl-delay: 1 
